@@ -1,21 +1,26 @@
 __author__ = 'Константин'
+
 from tkinter import *
 from tkinter import messagebox
-from PIL import ImageTk,Image
 from tkinter.ttk import Combobox
+
+from PIL import ImageTk,Image
 from os import startfile
-import pyodbc
+
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+
 from datetime import datetime, time,date
+
+import pyodbc
+
 global zal
 global bilets
-
 global color_mesto
 
 
-cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=(local);DATABASE=Teatr05')
+cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=(local);DATABASE={name_of_DB}')
 cursor = cnxn.cursor()
 
 date_now = (str(datetime.today().date())[5:7])
@@ -1077,19 +1082,10 @@ root.bind('<Button-1>',point)
 top_frame = Frame(main,width="1220",height=10,bg=color_fon)                        #ALL FOR TOP FRAME
 top_frame.grid(row=0,column=0,columnspan = 50)
 
-#lab = Label(top_frame,text="Областной театр юного зрителя",font=("Buxton Sketch",27),bg='Light goldenrod')
-#lab.pack()
 label_for_izm = Label(root)
-#seans_info = Button(top_frame,text='Работа с сеансами',command=form_seans,font=15,width=20)
-#spek_info = Button(top_frame,text='Работа со спектаклями', command =form_spek,font=15,width=20)
-#bd_but = Button(top_frame,text='Работа с дизайном',command=design,font=15,width=20)
-
-#seans_info.place(x=300,y=25,anchor='w')
-#spek_info.place(x=520,y=25,anchor='w')
-#bd_but.place(x=740,y=25,anchor='w')
 
 test=Label(main,text="")
-#frame_scena = Frame(main,width="350",height="50",bg="Light goldenrod")                      # ALL FOR SCENA BLOCK
+                                                                                   # ALL FOR SCENA BLOCK
 frame_scena = Frame(main,width="850",height="50",bg=color_fon)
 lab = Label(frame_scena,text="Областной театр юного зрителя",font=("Buxton Sketch",27),bg=color_fon)
 frame_scena.grid(row=1,column=1,columnspan=40)
@@ -1102,8 +1098,6 @@ menu.add_command(label="Работа с дизайном",command=design)
 menu.add_separator()
 menu.add_command(label="Работа с отчетом по билетам",command=report_form)
 
-#lab.grid(row=1,column=1,columnspan=40)
-#lab.pack(side='right')
 lab.place(x=330,y=25,anchor='center')
 lab.bind('<Button-3>',context)
 
@@ -1130,7 +1124,6 @@ left_label4.place(x=142,y=385,anchor = "e")
 
 right_frame = Frame(main,width="200",height="460",bg=color_fon)
 right_frame.grid(row=1,column=20,rowspan=10)                                    # ALL FOR RIGHT BLOCK
-
 
 shopping_cart_frame = Frame(right_frame,width="190",height="260",bg=color_fon)
 shopping_cart_frame.place(x=95,y=0,anchor="n")
@@ -1247,11 +1240,7 @@ v_glavnoi_roli.place(x=0,y=0,anchor="w")
 text_actors = Text(bottom_frame,height=1,width = 65,font=10)
 text_actors.place(x=137,y=0,anchor="w")
 
-#poloska = Frame(main,width='850',height='400',bg='black')
-#poloska.grid(row=3,column=2)
-
-#center_frame = Frame(main,width = "850",height="400",bg="moccasin",bd=20)
-#center_frame.grid(row=3,column =2)                                              # ALL FOR CENTER BLOCK
+                                                                                        # ALL FOR CENTER BLOCK
 
 poloska = Frame(main,width="850",height="400",bg="black",bd=3)
 poloska.grid(row=3,column=2)
