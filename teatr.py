@@ -4,14 +4,14 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Combobox
 
-from PIL import ImageTk,Image
+from PIL import ImageTk, Image
 from os import startfile
 
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-from datetime import datetime, time,date
+from datetime import datetime, time, date
 
 import pyodbc
 
@@ -26,91 +26,99 @@ cursor = cnxn.cursor()
 date_now = (str(datetime.today().date())[5:7])
 time_now = (str(datetime.today().time())[:5])
 
-class Mesto():
-    def __init__(self,root,a,b,price,text="",width=3,height=1):
-        self.but = Button(root)
-        self.but['text']= text
-        self.but.bind("<Button-1>",self.sell)
-        self.but.bind("<Button-3>",self.bron)
+
+class Mesto:
+    def __init__(self, _root, a, b, price, text="", width=3, height=1):
+        self.but = Button(_root)
+        self.but['text'] = text
+        self.but.bind("<Button-1>", self.sell)
+        self.but.bind("<Button-3>", self.bron)
         self.but['bg'] = color_mesto
         self.but['width'] = width
         self.but.a = str(a)
         self.but.b = str(b)
         self.but.price = price
         self.but['height'] = height
-        self.but.grid(row = a,column=b,padx=5,pady=5)
-    def sell(self,event):
+        self.but.grid(row=a, column=b, padx=5, pady=5)
+
+    def sell(self, event):
         if self.but['bg'] != "gray" and self.but['bg'] != "darkblue":
             self.but['bg'] = "red"
             self.but['fg'] = "black"
-            name = 'Ряд : '+self.but.a+' , Место : '+str(self.but['text']) + ', Цена : ' + str(self.but.price)
-            if name not in listshop.get(0,END):
-                listshop.insert(END,name)
-                lol = list(listshop.get(0,END))
+            name = 'Ряд : ' + self.but.a + ' , Место : ' +str(self.but['text']) + ', Цена : ' + str(self.but.price)
+
+            if name not in listshop.get(0, END):
+                listshop.insert(END, name)
+                lol = list(listshop.get(0, END))
                 lab_co['text'] = len(lol)
                 lab_s['text'] = str(int(lab_s['text']) + self.but.price)
-    def bron(self,event):
+
+    def bron(self, event):
         if self.but['bg'] != "gray" and self.but['bg'] != "darkblue":
             self.but['bg'] = "black"
             self.but['fg'] = "white"
-            name = 'Ряд : '+self.but.a+' , Место : '+str(self.but['text']) + ', Цена : ' + str(self.but.price)
-            if name not in listshop.get(0,END):
-                listshop.insert(END,name)
-                lol = list(listshop.get(0,END))
+            name = 'Ряд : ' + self.but.a + ' , Место : ' + str(self.but['text']) + ', Цена : ' + str(self.but.price)
+
+            if name not in listshop.get(0, END):
+                listshop.insert(END, name)
+                lol = list(listshop.get(0, END))
                 lab_co['text'] = len(lol)
                 lab_s['text'] = str(int(lab_s['text']) + self.but.price)
+
     def delete(self):
         self.but.grid_forget()
+
 
 class CreateHall():
     def __init__(self):
         self.all = []
+
     def create(self):
         num = 0
         parter1 = []
 
-        for i in range(1,3):
-            for k in range(1,21):
-                num+=1
-                parter1.append(Mesto(fr_par1,i,k,price=0,text=num))
+        for i in range(1, 3):
+            for k in range(1, 21):
+                num += 1
+                parter1.append(Mesto(fr_par1, i, k, price=0, text=num))
 
         parter2 = []
-        for i in range(3,5):
-            for k in range(1,21):
-                num+=1
-                parter2.append(Mesto(fr_par2,i,k,price=0,text=num))
+        for i in range(3, 5):
+            for k in range(1, 21):
+                num += 1
+                parter2.append(Mesto(fr_par2, i, k, price=0, text=num))
 
         parter3= []
-        for i in range(5,7):
-            for k in range(1,21):
-                if(k in range(8,14) and i == 5):
-                    parter3.append(Mesto(fr_par3,i,k,price=0,text='0'))
+        for i in range(5, 7):
+            for k in range(1, 21):
+                if k in range(8, 14) and i == 5:
+                    parter3.append(Mesto(fr_par3, i, k, price=0, text='0'))
                 else:
-                    num+=1
-                    parter3.append(Mesto(fr_par3,i,k,price=0,text=num))
+                    num += 1
+                    parter3.append(Mesto(fr_par3, i, k, price=0, text=num))
 
-        for i in range(7,13):
+        for i in range(7, 13):
             parter3[i].delete()
 
         parter4= []
-        for i in range(7,9):
-            for k in range(1,21):
-                if ( k in range(5,17) and i == 7):
-                    parter4.append(Mesto(fr_par4,i,k,price=0,text='0'))
+        for i in range(7, 9):
+            for k in range(1, 21):
+                if k in range(5, 17) and i == 7:
+                    parter4.append(Mesto(fr_par4, i, k, price=0, text='0'))
                 else:
-                    num+=1
-                    parter4.append(Mesto(fr_par4,i,k,price=0,text=num))
+                    num += 1
+                    parter4.append(Mesto(fr_par4, i, k, price=0, text=num))
 
-        for i in range(4,16):
+        for i in range(4, 16):
             parter4[i].delete()
 
-        for each in parter1,parter2,parter3,parter4:
+        for each in parter1, parter2, parter3, parter4:
             self.all.append(each)
 
     def return_all(self):
-        return( self.all )
+        return self.all
 
-    def right_start(self, s,b):
+    def right_start(self, s, b):
         seans_id = str(select_q("Select id from Seans where date = "+"'"+combo_date.get()+"'"+" and time =" \
                                 +"'"+combo_time.get()+"'"+"and id_spek =" \
                                 + str(select_q("Select id from Spektakl where name =" \
@@ -122,21 +130,22 @@ class CreateHall():
 
         for i in range(4):
             for each in self.all[i]:
-                if (i == 0):
+                if i == 0:
                     each.but.price = one
-                elif (i == 1):
+                elif i == 1:
                     each.but.price = two
-                elif (i==2):
+                elif i == 2:
                     each.but.price = three
-                elif( i ==3):
+                elif i == 3:
                     each.but.price = four
 
-                if (each.but['text'] in s):
+                if each.but['text'] in s:
                     each.but['bg'] = 'gray'
-                elif(each.but['text'] in b):
+
+                elif each.but['text'] in b:
                     each.but['bg'] = 'darkblue'
                     each.but['fg'] = 'white'
-                else :
+                else:
                     each.but['bg'] = color_mesto
                     each.but['fg'] = 'black'
         price1['text'] = one
@@ -147,15 +156,15 @@ class CreateHall():
     def antibron(self,numbers):
         for i in range(4):
             for each in self.all[i]:
-                if (each.but['text'] in numbers):
-                    name = 'Ряд : '+each.but.a+' , Место : '+str(each.but['text']) + ', Цена : ' + str(each.but.price)
-                    if name not in listshop.get(0,END):
-                        listshop.insert(END,name)
-                        lol = list(listshop.get(0,END))
+                if each.but['text'] in numbers:
+                    name = 'Ряд : ' + each.but.a + ' , Место : ' + str(each.but['text']) + ', Цена : ' + str(each.but.price)
+                    if name not in listshop.get(0, END):
+                        listshop.insert(END, name)
+                        lol = list(listshop.get(0, END))
                         lab_co['text'] = len(lol)
                         lab_s['text'] = str(int(lab_s['text']) + each.but.price)
 
-    def antibron_true(self,numbers):
+    def antibron_true(self, numbers):
         bilets=[]
         bilet={}
         name_spek = combobox.get()
@@ -165,22 +174,22 @@ class CreateHall():
             for i in range(4):
                 for each in zal.return_all()[i]:
                     for num in numbers:
-                        if (each.but['text'] == num):
-                            bilet["nomer"]=each.but['text']
-                            if (i==0 or i==1):
-                                bilet["ryad"]=each.but.a
-                                bilet["mesto"]="Партер"
-                            elif (i==2):
-                                bilet['ryad']=each.but.a
-                                bilet["mesto"]="2 этаж"
-                            elif (i==3):
-                                bilet['ryad']=each.but.a
-                                bilet["mesto"]="3 этаж"
+                        if each.but['text'] == num:
+                            bilet["nomer"] = each.but['text']
+                            if i == 0 or i == 1:
+                                bilet["ryad"] = each.but.a
+                                bilet["mesto"] = "Партер"
+                            elif i == 2:
+                                bilet['ryad'] = each.but.a
+                                bilet["mesto"] = "2 этаж"
+                            elif i == 3:
+                                bilet['ryad'] = each.but.a
+                                bilet["mesto"] = "3 этаж"
 
-                            bilet["price"]=each.but.price
-                            bilet["spektakl"]=name_spek
-                            bilet["data"]=data_spek
-                            bilet["time"]=time_spek
+                            bilet["price"] = each.but.price
+                            bilet["spektakl"] = name_spek
+                            bilet["data"] = data_spek
+                            bilet["time"] = time_spek
                             bilets.append(bilet.copy())
                             bilet.clear()
 
@@ -189,7 +198,7 @@ class CreateHall():
             for i in range(4):
                 for each in zal.return_all()[i]:
                     for num in numbers:
-                        if (each.but['text'] == num):
+                        if each.but['text'] == num:
                             each.but['bg'] = 'gray'
                             each.but['fg'] = 'black'
 
@@ -205,32 +214,36 @@ class CreateHall():
                                             +str(select_q("Select id from Spektakl where name ="+"'"+combobox.get()+"'")[0]))[0])+" and nomer ="+str(num))
                             total(each.but.price)
 
-            messagebox.showinfo('Success','Бронь снята и билеты проданы.')
-            antibron_text.delete(0,END)
+            messagebox.showinfo('Success', 'Бронь снята и билеты проданы.')
+            antibron_text.delete(0, END)
             startfile('bilets.pdf')
-        except:
-            messagebox.showerror('Error','Возникла ошибка. Закройте файл bilets.pdf')
+        except Exception as e:
+            print(e)
+            messagebox.showerror('Error', 'Возникла ошибка. Закройте файл bilets.pdf')
+
 
 def clear(event):
-    listshop.delete(0,END)
+    listshop.delete(0, END)
     lab_co['text'] = ''
     lab_s['text'] = '0'
-    antibron_text.delete(0,END)
+    antibron_text.delete(0, END)
     for i in range(4):
         for each in zal.return_all()[i]:
-            if each.but['bg'] == 'red' or each.but['bg']=='black':
+            if each.but['bg'] == 'red' or each.but['bg'] == 'black':
                 each.but['bg'] = color_mesto
                 each.but['fg'] = 'black'
     input_name.place_forget()
 
-def proverka(event,color):
+
+def proverka(event, color):
     for i in range(4):
         for each in zal.return_all()[i]:
-            if each.but['bg'] == color :
+            if each.but['bg'] == color:
                 clear(event)
                 return 0
-    else :
+    else:
         return 1
+
 
 def total(price):
     if str(select_q("select id from Sell where id_seans ="+ str(select_q("Select id from Seans where date = "+"'"+combo_date.get()+"'"+" and time =" \
@@ -250,37 +263,37 @@ def total(price):
     total_money = int(select_q("select Sell.total_money from Sell,Seans where Seans.id = Sell.id_seans and Sell.id_seans="+"'"+seans_id+"'")[0]) + int(price)
     kol_biletov = int(select_q("select Sell.kol_biletov from Sell,Seans where Seans.id = Sell.id_seans and Sell.id_seans="+"'"+seans_id+"'")[0]) + 1
 
-
     update_q("update sell set total_money ="+"'"+str(total_money)+"'"+", kol_biletov="+"'"+str(kol_biletov)+"'"+"where id_seans=" +"'" \
                  +seans_id+"'")
 
+
 def sell(event):
-    bilets=[]
-    bilet={}
+    bilets = []
+    bilet = {}
     name_spek = combobox.get()
     data_spek = combo_date.get()
     time_spek = combo_time.get()
-    if proverka(event,'black') == 1:
-        if messagebox.askokcancel('Подтверждение','Вы уверены?') :
+    if proverka(event, 'black') == 1:
+        if messagebox.askokcancel('Подтверждение', 'Вы уверены?'):
             try:
                 for i in range(4):
                     for each in zal.return_all()[i]:
                         if each.but['bg'] == 'red':
-                            bilet["nomer"]=each.but['text']
-                            if (i==0 or i==1):
-                                bilet["ryad"]=each.but.a
-                                bilet["mesto"]="Партер"
-                            elif (i==2):
-                                bilet['ryad']=each.but.a
-                                bilet["mesto"]="2 этаж"
-                            elif (i==3):
-                                bilet['ryad']=each.but.a
-                                bilet["mesto"]="3 этаж"
+                            bilet["nomer"] = each.but['text']
+                            if i == 0 or i == 1:
+                                bilet["ryad"] = each.but.a
+                                bilet["mesto"] = "Партер"
+                            elif i == 2:
+                                bilet['ryad'] = each.but.a
+                                bilet["mesto"] = "2 этаж"
+                            elif i == 3:
+                                bilet['ryad'] = each.but.a
+                                bilet["mesto"] = "3 этаж"
 
-                            bilet["price"]=each.but.price
-                            bilet["spektakl"]=name_spek
-                            bilet["data"]=data_spek
-                            bilet["time"]=time_spek
+                            bilet["price"] = each.but.price
+                            bilet["spektakl"] = name_spek
+                            bilet["data"] = data_spek
+                            bilet["time"] = time_spek
                             bilets.append(bilet.copy())
                             bilet.clear()
 
@@ -299,31 +312,30 @@ def sell(event):
                             total(each.but.price)
                             each.but['bg'] = 'gray'
 
-
-                listshop.delete(0,END)
-                lab_co['text'] =''
-                lab_s['text']='0'
+                listshop.delete(0, END)
+                lab_co['text'] = ''
+                lab_s['text'] = '0'
                 clear(event=1)
-                if len(bilets)>0:
-                    messagebox.showinfo('Success','Продажа прошла успешно!\nБилет сформирован и сохранён в bilets.pdf')
+                if len(bilets) > 0:
+                    messagebox.showinfo('Success', 'Продажа прошла успешно!\nБилет сформирован и сохранён в bilets.pdf')
                     startfile('bilets.pdf')
-            except:
-                messagebox.showerror('Error','Ошибка при продаже билета.\nВозможно открыт файл с билетами.')
-                listshop.delete(0,END)
-                lab_co['text'] =''
-                lab_s['text']='0'
+            except Exception as e:
+                print(e)
+                messagebox.showerror('Error', 'Ошибка при продаже билета.\nВозможно открыт файл с билетами.')
+                listshop.delete(0, END)
+                lab_co['text'] = ''
+                lab_s['text'] = '0'
                 clear(event=1)
-
 
 
 def bron(event):
     if (input_name.place_info().__sizeof__()) == 264:
-        input_name.place(x=5,y=245,anchor="w",width=87,height=35)
-    else :
-        if input_name.get() == '' :
+        input_name.place(x=5, y=245, anchor="w", width=87, height=35)
+    else:
+        if input_name.get() == '':
             clear(event=1)
         else:
-            if proverka(event,'red') == 1:
+            if proverka(event, 'red') == 1:
                 for i in range(4):
                     for each in zal.return_all()[i]:
                         if each.but['bg'] == 'black':
@@ -334,11 +346,12 @@ def bron(event):
                                                              +"'"+combobox.get()+"'")[0]))[0])+"',"+"'"+input_name.get()+"',"+str(each.but['text'])+")"
                             insert_q(s)
                             each.but['bg'] = 'darkblue'
-                            listshop.delete(0,END)
-                            lab_co['text'] =''
-                            lab_s['text']='0'
+                            listshop.delete(0, END)
+                            lab_co['text'] = ''
+                            lab_s['text'] = '0'
             input_name.place_forget()
-            input_name.delete(0,END)
+            input_name.delete(0, END)
+
 
 def antibron(event):
     q = select_q("select nomer from Bron where name ="+"'"+antibron_text.get()+"'"+"and id_seans = " \
@@ -348,17 +361,19 @@ def antibron(event):
 
     if str(antibron_text.get()) == '':
         pass
-    else :
-        if str(listshop.get(0,END)) == '()':
+    else:
+        if str(listshop.get(0, END)) == '()':
             zal.antibron(q)
-        else :
-            listshop.delete(0,END)
-            lab_co['text'] =''
-            lab_s['text']='0'
+        else:
+            listshop.delete(0, END)
+            lab_co['text'] = ''
+            lab_s['text'] = '0'
             zal.antibron_true(q)
 
+
 def point(event):
-    print('x =' +str(event.x) + ' y=' +str(event.y))
+    print('x =' + str(event.x) + ' y=' + str(event.y))
+
 
 def update_zal(event):
     seans_id = str(select_q("Select id from Seans where date = "+"'"+combo_date.get()+"'"+" and time =" \
@@ -367,47 +382,47 @@ def update_zal(event):
 
     q = select_q("select nomer from Bilet where id_seans = "+"'"+seans_id+"'")
 
-    date_now = (str(datetime.today().date()))
-    time_now = (str(datetime.today().time())[:5])                                  #TIME FOR BRON !!!!!!!!! 30 MINUT
-    if int(time_now[3:]) + 31 < 60 :
+    date_now = str(datetime.today().date())
+    time_now = str(datetime.today().time())[:5]                                  #TIME FOR BRON !!!!!!!!! 30 MINUT
+    if int(time_now[3:]) + 31 < 60:
         minute = int(time_now[3:]) + 31
         time_for_bron = time_now[:3] + str(minute)
     else:
         minute = (int(time_now[3:]) + 31) - 60
         hours = int(time_now[:2]) + 1
-        if ( len(str(minute))) == 1 :
+        if len(str(minute)) == 1:
             minute = "0" + str(minute)
-        if ( len(str(hours))) == 1:
+        if len(str(hours)) == 1:
             hours = "0" + str(hours)
 
         time_for_bron = str(hours) + ":" + str(minute)
 
-
     k = select_q("select Bron.nomer from Bron, Seans where Seans.id = Bron.id_seans and Bron.id_seans="+"'" + seans_id +"'" + "and Seans.date ="\
                  +"'" + date_now + "'" + "and Seans.time  < " +"'"+ time_for_bron + "'")
 
-    if len(k) > 0 :
+    if len(k) > 0:
         for i in k:
                 delete_q("delete from Bron where id_seans="+"'"+seans_id+"'"+" and nomer="+str(i))
 
     k = select_q("select nomer from Bron where id_seans="+"'"+seans_id+"'")
-    zal.right_start(q,k)
+    zal.right_start(q, k)
     clear(event=1)
+
 
 def comboboxselected(event):
     combo_date.set('')
-    combo_date['value']=combobox_seans(date_time('date'))
+    combo_date['value'] = combobox_seans(date_time('date'))
     combo_date.current(0)
     combo_date_selected(event=1)
     update_zal(event=1)
     opisanie.config(state=NORMAL)
     opisanie.delete('1.0', END)
-    opisanie.insert(1.0,select_q("select opisanie from Spektakl where name =" +"'"+combobox.get()+"'")[0])
+    opisanie.insert(1.0, select_q("select opisanie from Spektakl where name =" +"'"+combobox.get()+"'")[0])
     opisanie.config(state=DISABLED)
 
     text_actors.config(state=NORMAL)
     text_actors.delete('1.0', END)
-    text_actors.insert(1.0,select_q("select actors from Spektakl where name =" +"'"+combobox.get()+"'")[0])
+    text_actors.insert(1.0, select_q("select actors from Spektakl where name =" +"'"+combobox.get()+"'")[0])
     text_actors.config(state=DISABLED)
 
     price1['text'] = zal.return_all()[0][0].but.price
@@ -415,13 +430,15 @@ def comboboxselected(event):
     price3['text'] = zal.return_all()[2][0].but.price
     price4['text'] = zal.return_all()[3][0].but.price
 
+
 def combo_date_selected(event):
     combo_time.set('')
-    combo_time['value']=date_time('time')
+    combo_time['value'] = date_time('time')
     combo_time.current(0)
     update_zal(event=1)
 
-def select_q(query,k=0):
+
+def select_q(query, k=0):
     l = []
     cursor.execute(query)
     rows = cursor.fetchall()
@@ -429,24 +446,29 @@ def select_q(query,k=0):
         l.append(row[k])
     return l
 
+
 def insert_q(query):
     cursor.execute(query)
     cnxn.commit()
+
 
 def update_q(query):
     cursor.execute(query)
     cnxn.commit()
 
+
 def delete_q(query):
     cursor.execute(query)
     cnxn.commit()
 
+
 def combobox_values():
-    combobox['values']=combobox_seans(select_q("Select Spektakl.name from Spektakl,Seans "\
+    combobox['values'] = combobox_seans(select_q("Select Spektakl.name from Spektakl,Seans "\
                                                                 " where Seans.id_spek = Spektakl.id and Seans.date >= +"\
                                                  +"'"+str(datetime.today().date())\
                                                  +"'"))
     combobox.current(0)
+
 
 def combobox_seans(a):
     b = []
@@ -454,6 +476,7 @@ def combobox_seans(a):
         if i not in b:
             b.append(i)
     return b
+
 
 def date_time(s=''):
     clear(event=1)
@@ -463,8 +486,9 @@ def date_time(s=''):
     elif s == 'time':
         return select_q("Select Seans.time from Seans,Spektakl where Seans.id_spek = Spektakl.id and Seans.date ="+"'"+combo_date.get()+"'" \
                         +"and Spektakl.name = "+"'"+combobox.get()+"'")
-    else :
+    else:
         return ''
+
 
 def form_spek():
     def adding_spek(event):
@@ -482,19 +506,20 @@ def form_spek():
     formSpek = Toplevel()
     formSpek.title('Работа с cпектаклями')
     formSpek.geometry('500x180+300+200')
-    formSpek.bind('<Button-1>',point)
-    spek_add = Button(formSpek,text='Добавить новый\n спектакль',font=15,bd=5)
-    spek_add.bind('<Button-1>',adding_spek)
-    spek_izm = Button(formSpek,text='Изменить инфо о \nспектакле',font=15,bd=5)
-    spek_izm.bind('<Button-1>',izmena_spek)
-    spek_del = Button(formSpek,text='Удалить',font=15,bd=5,height=2,width=10)
-    spek_del.bind('<Button-1>',delete_spek)
-    help_spek = Label(formSpek,text='Манипуляция с информацией связанной \n с спектаклями в базе данных : ',font = ("Buxton Sketch",22))
+    formSpek.bind('<Button-1>', point)
+    spek_add = Button(formSpek, text='Добавить новый\n спектакль', font=15, bd=5)
+    spek_add.bind('<Button-1>', adding_spek)
+    spek_izm = Button(formSpek, text='Изменить инфо о \nспектакле', font=15, bd=5)
+    spek_izm.bind('<Button-1>', izmena_spek)
+    spek_del = Button(formSpek, text='Удалить', font=15, bd=5, height=2, width=10)
+    spek_del.bind('<Button-1>', delete_spek)
+    help_spek = Label(formSpek, text='Манипуляция с информацией связанной \n с спектаклями в базе данных : ', font=("Buxton Sketch", 22))
 
-    help_spek.place(x=36,y=50,anchor='w')
-    spek_add.place(x=29,y=130,anchor='w')
-    spek_izm.place(x=189,y=130,anchor='w')
-    spek_del.place(x=363,y=130,anchor='w')
+    help_spek.place(x=36, y=50, anchor='w')
+    spek_add.place(x=29, y=130, anchor='w')
+    spek_izm.place(x=189, y=130, anchor='w')
+    spek_del.place(x=363, y=130, anchor='w')
+
 
 def form_seans():
     def adding_seans(event):
@@ -513,70 +538,75 @@ def form_seans():
                 delete_q("delete from Seans where id="+str(seans_id[0]))
                 combobox_values()
                 comboboxselected(event=1)
-        except:
-            messagebox.showerror("Error","Невозможно удалить данный сеанс.")
+        except Exception as e:
+            print(e)
+            messagebox.showerror("Error", "Невозможно удалить данный сеанс.")
 
     formSeans = Toplevel()
     formSeans.title('Работа с сеансами')
     formSeans.geometry('500x180+300+200')
-    formSeans.bind('<Button-1>',point)
-    seans_add = Button(formSeans,text='Добавить новый\n сеанс',font=15,bd=5)
-    seans_add.bind('<Button-1>',adding_seans)
-    seans_izm = Button(formSeans,text='Изменить инфо о \nсеансе',font=15,bd=5)
-    seans_izm.bind('<Button-1>',izmena_seans)
-    seans_del = Button(formSeans,text='Удалить',font=15,bd=5,height=2,width=10)
-    seans_del.bind('<Button-1>',delete_seans)
-    help_seans = Label(formSeans,text='Манипуляция с информацией связанной \n с сеансами в базе данных : ',font = ("Buxton Sketch",22))
+    formSeans.bind('<Button-1>', point)
+    seans_add = Button(formSeans, text='Добавить новый\n сеанс', font=15, bd=5)
+    seans_add.bind('<Button-1>', adding_seans)
+    seans_izm = Button(formSeans, text='Изменить инфо о \nсеансе', font=15, bd=5)
+    seans_izm.bind('<Button-1>', izmena_seans)
+    seans_del = Button(formSeans, text='Удалить', font=15, bd=5, height=2, width=10)
+    seans_del.bind('<Button-1>', delete_seans)
+    help_seans = Label(formSeans, text='Манипуляция с информацией связанной \n с сеансами в базе данных : ', font=("Buxton Sketch",22))
 
-    help_seans.place(x=36,y=50,anchor='w')
-    seans_add.place(x=29,y=130,anchor='w')
-    seans_izm.place(x=189,y=130,anchor='w')
-    seans_del.place(x=363,y=130,anchor='w')
+    help_seans.place(x=36, y=50, anchor='w')
+    seans_add.place(x=29, y=130, anchor='w')
+    seans_izm.place(x=189, y=130, anchor='w')
+    seans_del.place(x=363, y=130, anchor='w')
+
 
 def add_spek():
     def adding_spek():
         try:
-            if (name_spek_.get() ==""):
-                a+b
+            if name_spek_.get() == "":
+                raise Exception
             insert_q("insert into Spektakl(name,opisanie,actors) values("+"'"+name_spek_.get()+"'"+","+"'"+opisanie_spek_.get("1.0",END).split('\n')[0]+"'"+","+"'"+actors_spek_.get("1.0",END).split('\n')[0]+"'"+")")
-            messagebox.showinfo("Добавлено","Новый спектакль успешно добавлен в базу данных.")
+            messagebox.showinfo("Добавлено", "Новый спектакль успешно добавлен в базу данных.")
             spek.destroy()
             combobox_values()
-        except:
-            messagebox.showerror("Error","Введите правильно информацию о спектакле.")
+        except Exception as e:
+            print(e)
+            messagebox.showerror("Error", "Введите правильно информацию о спектакле.")
             spek.tkraise()
 
     spek = Toplevel()
     spek.title('Добавление нового спектакля')
     spek.geometry('500x300+500+200')
-    spek.bind('<Button-1>',point)
+    spek.bind('<Button-1>', point)
 
-    name_spek = Label(spek,text='Введите название\n спектакля : ')
-    name_spek.place(x=22,y=30,anchor='w')
+    name_spek = Label(spek, text='Введите название\n спектакля : ')
+    name_spek.place(x=22, y=30, anchor='w')
 
-    opisanie_spek = Label(spek,text='Описание : ')
-    opisanie_spek.place(x=22,y=75,anchor='w')
+    opisanie_spek = Label(spek, text='Описание : ')
+    opisanie_spek.place(x=22, y=75, anchor='w')
 
-    actors_spek = Label(spek,text='Актеры : ')
-    actors_spek.place(x=22,y=170,anchor='w')
+    actors_spek = Label(spek, text='Актеры : ')
+    actors_spek.place(x=22, y=170, anchor='w')
 
-    name_spek_ = Entry(spek,width=53)
-    name_spek_.place(x=140,y=30,anchor='w')
+    name_spek_ = Entry(spek, width=53)
+    name_spek_.place(x=140, y=30, anchor='w')
 
-    opisanie_spek_ = Text(spek,height=5,width=40,wrap=WORD)
-    opisanie_spek_.place(x=140,y=58,anchor='nw')
+    opisanie_spek_ = Text(spek, height=5, width=40, wrap=WORD)
+    opisanie_spek_.place(x=140, y=58, anchor='nw')
 
-    actors_spek_ = Text(spek,height=2,width=40,wrap=WORD)
-    actors_spek_.place(x=140,y=155,anchor='nw')
+    actors_spek_ = Text(spek, height=2, width=40, wrap=WORD)
+    actors_spek_.place(x=140, y=155, anchor='nw')
 
-    spek_ok = Button(spek,text='Добавить',command=adding_spek)
-    spek_ok.place(x=85,y=251)
-    spek_cancel = Button(spek,text='Отменить',command=spek.destroy)
-    spek_cancel.place(x=350,y=251)
+    spek_ok = Button(spek, text='Добавить', command=adding_spek)
+    spek_ok.place(x=85, y=251)
+    spek_cancel = Button(spek, text='Отменить', command=spek.destroy)
+    spek_cancel.place(x=350, y=251)
+
 
 def chose_name_izm(s=''):
     def izm_names_selected(event):
-        label_for_izm['text']=izm_names.get()
+        label_for_izm['text'] = izm_names.get()
+
     def izmenenie():
         if izm_names.get() == '':
             pass
@@ -585,21 +615,21 @@ def chose_name_izm(s=''):
             izm_spek()
 
     def deleting():
-        if messagebox.askokcancel('Подтверждение','Вы уверены?') :
+        if messagebox.askokcancel('Подтверждение','Вы уверены?'):
             id_spek = select_q("select id from Spektakl where name="+"'"+izm_names.get()+"'")[0]
             delete_q("delete from Seans where id_spek="+"'"+str(id_spek)+"'")
             delete_q("delete from Spektakl where id="+str(id_spek))
             name_izm.destroy()
-            messagebox.showinfo('Удалено','Спектакль удалён с сеансами,которые были связаны с ним.')
+            messagebox.showinfo('Удалено', 'Спектакль удалён с сеансами,которые были связаны с ним.')
             combobox_values()
             comboboxselected(event=1)
 
     name_izm = Toplevel()
     name_izm.title('Спектакли')
     name_izm.geometry('500x300+500+200')
-    name_izm.bind('<Button-1>',point)
+    name_izm.bind('<Button-1>', point)
 
-    label_izm_text = Label(name_izm,text='Выберите нужный спектакль\n для изменения/удаления',font = ("Buxton Sketch",22))
+    label_izm_text = Label(name_izm, text='Выберите нужный спектакль\n для изменения/удаления', font=("Buxton Sketch",22))
     label_izm_text.place(x=88,y=25,anchor='nw')
     izm_names = Combobox(name_izm,values=select_q("Select Spektakl.name from Spektakl"),height=1,state='readonly',font=("Arial",15,"bold"),width=35)
     izm_names.bind('<<ComboboxSelected>>',izm_names_selected)
