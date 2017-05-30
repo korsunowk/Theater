@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-from datetime import datetime, time, date
+from datetime import datetime
 
 import pyodbc
 
@@ -122,9 +122,10 @@ class CreateHall():
 
     def right_start(self, s, b):
         seans_id = str(select_q(
-            "Select id from Seans where date = " + "'" + combo_date.get() + "'" + " and time =" \
-            + "'" + combo_time.get() + "'" + "and id_spek =" \
-            + str(select_q("Select id from Spektakl where name =" \
+            "Select id from Seans where date = "
+            + "'" + combo_date.get() + "'" + " and time ="
+            + "'" + combo_time.get() + "'" + "and id_spek ="
+            + str(select_q("Select id from Spektakl where name ="
                            + "'" + combobox.get() + "'")[0]))[0])
         one = select_q("select one from Seans where id=" + seans_id)[0]
         two = select_q("select two from Seans where id=" + seans_id)[0]
@@ -208,21 +209,28 @@ class CreateHall():
                             each.but['fg'] = 'black'
 
                             insert_q(
-                                "insert into Bilet(id_seans,nomer) values (" + "'" \
+                                "insert into Bilet(id_seans,nomer) values ("
+                                + "'"
                                 + str(select_q(
-                                    "Select id from Seans where date = " + "'" + combo_date.get() + "'" + " and time =" \
-                                    + "'" + combo_time.get() + "'" + "and id_spek =" \
+                                    "Select id from Seans where date = "
+                                    + "'" + combo_date.get() + "'"
+                                    + " and time =" \
+                                    + "'" + combo_time.get() + "'"
+                                    + "and id_spek =" \
                                     + str(select_q(
-                                        "Select id from Spektakl where name =" \
+                                        "Select id from Spektakl where name ="
                                         + "'" + combobox.get() + "'")[0]))[
                                           0]) + "'" + "," + str(num) + ")")
 
-                            delete_q("delete from Bron where id_seans = " \
+                            delete_q("delete from Bron where id_seans = "
                                      + str(select_q(
-                                "Select id from Seans where date = " + "'" + combo_date.get() + "'" + " and time =" \
-                                + "'" + combo_time.get() + "'" + "and id_spek =" \
+                                "Select id from Seans where date = " + "'"
+                                + combo_date.get() + "'" + " and time ="
+                                + "'" + combo_time.get() + "'"
+                                + "and id_spek ="
                                 + str(select_q(
-                                    "Select id from Spektakl where name =" + "'" + combobox.get() + "'")[
+                                    "Select id from Spektakl where name ="
+                                    + "'" + combobox.get() + "'")[
                                           0]))[0]) + " and nomer =" + str(num))
                             total(each.but.price)
 
@@ -259,11 +267,15 @@ def proverka(event, color):
 
 
 def total(price):
-    if str(select_q("select id from Sell where id_seans =" + str(select_q(
-                                                                                    "Select id from Seans where date = " + "'" + combo_date.get() + "'" + " and time =" \
-                                                    + "'" + combo_time.get() + "'" + "and id_spek =" \
+    if str(select_q("select id from Sell where id_seans ="
+                            + str(select_q("Select id from Seans where date = "
+                                                   + "'" + combo_date.get()
+                                                   + "'" + " and time ="
+                                                    + "'" + combo_time.get()
+                                                   + "'" + "and id_spek ="
                     + str(select_q(
-                                        "Select id from Spektakl where name =" + "'" + combobox.get() + "'")[
+                                        "Select id from Spektakl where name ="
+                                                + "'" + combobox.get() + "'")[
                               0]))[0]))) == '[]':
         insert_q(
             "insert into Sell(id_seans,total_money,kol_biletov) values (" + "'" \
@@ -391,12 +403,15 @@ def bron(event):
 
 def antibron(event):
     q = select_q(
-        "select nomer from Bron where name =" + "'" + antibron_text.get() + "'" + "and id_seans = " \
+        "select nomer from Bron where name =" + "'"
+        + antibron_text.get() + "'" + "and id_seans = "
         + str(select_q(
-            "Select id from Seans where date = " + "'" + combo_date.get() + "'" + " and time =" \
-            + "'" + combo_time.get() + "'" + "and id_spek =" \
+            "Select id from Seans where date = " + "'"
+            + combo_date.get() + "'" + " and time ="
+            + "'" + combo_time.get() + "'" + "and id_spek ="
             + str(select_q(
-                "Select id from Spektakl where name =" + "'" + combobox.get() + "'")[
+                "Select id from Spektakl where name ="
+                + "'" + combobox.get() + "'")[
                       0]))[0]))
 
     if str(antibron_text.get()) == '':
@@ -417,10 +432,12 @@ def point(event):
 
 def update_zal(event):
     seans_id = str(select_q(
-        "Select id from Seans where date = " + "'" + combo_date.get() + "'" + " and time =" \
-        + "'" + combo_time.get() + "'" + "and id_spek =" \
+        "Select id from Seans where date = " + "'"
+        + combo_date.get() + "'" + " and time ="
+        + "'" + combo_time.get() + "'" + "and id_spek ="
         + str(select_q(
-            "Select id from Spektakl where name =" + "'" + combobox.get() + "'")[
+            "Select id from Spektakl where name ="
+            + "'" + combobox.get() + "'")[
                   0]))[0])
 
     q = select_q(
@@ -443,13 +460,17 @@ def update_zal(event):
         time_for_bron = str(hours) + ":" + str(minute)
 
     k = select_q(
-        "select Bron.nomer from Bron, Seans where Seans.id = Bron.id_seans and Bron.id_seans=" + "'" + seans_id + "'" + "and Seans.date =" \
-        + "'" + date_now + "'" + "and Seans.time  < " + "'" + time_for_bron + "'")
+        "select Bron.nomer from Bron, Seans "
+        "where Seans.id = Bron.id_seans and Bron.id_seans="
+        + "'" + seans_id + "'" + "and Seans.date =" \
+        + "'" + date_now + "'" + "and Seans.time  < " + "'"
+        + time_for_bron + "'")
 
     if len(k) > 0:
         for i in k:
             delete_q(
-                "delete from Bron where id_seans=" + "'" + seans_id + "'" + " and nomer=" + str(
+                "delete from Bron where id_seans=" + "'" + seans_id
+                + "'" + " and nomer=" + str(
                     i))
 
     k = select_q(
@@ -467,15 +488,15 @@ def comboboxselected(event):
     opisanie.config(state=NORMAL)
     opisanie.delete('1.0', END)
     opisanie.insert(1.0, select_q(
-        "select opisanie from Spektakl where name =" + "'" + combobox.get() + "'")[
-        0])
+        "select opisanie from Spektakl where name =" + "'"
+        + combobox.get() + "'")[0])
     opisanie.config(state=DISABLED)
 
     text_actors.config(state=NORMAL)
     text_actors.delete('1.0', END)
     text_actors.insert(1.0, select_q(
-        "select actors from Spektakl where name =" + "'" + combobox.get() + "'")[
-        0])
+        "select actors from Spektakl where name =" + "'"
+        + combobox.get() + "'")[0])
     text_actors.config(state=DISABLED)
 
     price1['text'] = zal.return_all()[0][0].but.price
@@ -517,9 +538,9 @@ def delete_q(query):
 
 def combobox_values():
     combobox['values'] = combobox_seans(
-        select_q("Select Spektakl.name from Spektakl,Seans " \
-                 " where Seans.id_spek = Spektakl.id and Seans.date >= +" \
-                 + "'" + str(datetime.today().date()) \
+        select_q("Select Spektakl.name from Spektakl,Seans "
+                 " where Seans.id_spek = Spektakl.id and Seans.date >= +"
+                 + "'" + str(datetime.today().date())
                  + "'"))
     combobox.current(0)
 
@@ -536,12 +557,16 @@ def date_time(s=''):
     clear(event=1)
     if s == 'date':
         return (select_q(
-            "Select Seans.date from Seans,Spektakl where Seans.id_spek = Spektakl.id and Seans.date >= +" \
+            "Select Seans.date from Seans,Spektakl "
+            "where Seans.id_spek = Spektakl.id and Seans.date >= +"
             + "'" + str(
-                datetime.today().date()) + "'" + " and Spektakl.name = " + "'" + combobox.get() + "'"))
+                datetime.today().date()) + "'" + " and Spektakl.name = "
+            + "'" + combobox.get() + "'"))
     elif s == 'time':
         return select_q(
-            "Select Seans.time from Seans,Spektakl where Seans.id_spek = Spektakl.id and Seans.date =" + "'" + combo_date.get() + "'" \
+            "Select Seans.time from Seans,Spektakl "
+            "where Seans.id_spek = Spektakl.id and Seans.date =" + "'"
+            + combo_date.get() + "'" \
             + "and Spektakl.name = " + "'" + combobox.get() + "'")
     else:
         return ''
@@ -574,7 +599,8 @@ def form_spek():
                       width=10)
     spek_del.bind('<Button-1>', delete_spek)
     help_spek = Label(formSpek,
-                      text='Манипуляция с информацией связанной \n с спектаклями в базе данных : ',
+                      text='Манипуляция с информацией связанной \n '
+                           'с спектаклями в базе данных : ',
                       font=("Buxton Sketch", 22))
 
     help_spek.place(x=36, y=50, anchor='w')
@@ -595,8 +621,11 @@ def form_seans():
     def delete_seans(event):
         try:
             seans_id = select_q(
-                "select Seans.id from Seans,Spektakl where Seans.id_spek = Spektakl.id and Spektakl.name =" + "'" + combobox.get() + "'" + \
-                "and Seans.date =" + "'" + combo_date.get() + "'" + "and Seans.time=" + "'" + combo_time.get() + "'")
+                "select Seans.id from Seans,Spektakl "
+                "where Seans.id_spek = Spektakl.id and Spektakl.name ="
+                + "'" + combobox.get() + "'" + \
+                "and Seans.date =" + "'" + combo_date.get() + "'"
+                + "and Seans.time=" + "'" + combo_time.get() + "'")
             if messagebox.askokcancel('Подтверждение', 'Вы уверены?'):
                 delete_q("delete from Seans where id=" + str(seans_id[0]))
                 combobox_values()
@@ -618,7 +647,8 @@ def form_seans():
                        width=10)
     seans_del.bind('<Button-1>', delete_seans)
     help_seans = Label(formSeans,
-                       text='Манипуляция с информацией связанной \n с сеансами в базе данных : ',
+                       text='Манипуляция с информацией связанной \n '
+                            'с сеансами в базе данных : ',
                        font=("Buxton Sketch", 22))
 
     help_seans.place(x=36, y=50, anchor='w')
@@ -633,12 +663,14 @@ def add_spek():
             if name_spek_.get() == "":
                 raise Exception
             insert_q(
-                "insert into Spektakl(name,opisanie,actors) values(" + "'" + name_spek_.get() + "'" + "," + "'" +
+                "insert into Spektakl(name,opisanie,actors) values("
+                + "'" + name_spek_.get() + "'" + "," + "'" +
                 opisanie_spek_.get("1.0", END).split('\n')[
                     0] + "'" + "," + "'" +
                 actors_spek_.get("1.0", END).split('\n')[0] + "'" + ")")
             messagebox.showinfo("Добавлено",
-                                "Новый спектакль успешно добавлен в базу данных.")
+                                "Новый спектакль успешно "
+                                "добавлен в базу данных.")
             spek.destroy()
             combobox_values()
         except Exception as e:
@@ -690,14 +722,15 @@ def chose_name_izm(s=''):
     def deleting():
         if messagebox.askokcancel('Подтверждение', 'Вы уверены?'):
             id_spek = select_q(
-                "select id from Spektakl where name=" + "'" + izm_names.get() + "'")[
-                0]
+                "select id from Spektakl where name=" + "'" + izm_names.get()
+                + "'")[0]
             delete_q(
                 "delete from Seans where id_spek=" + "'" + str(id_spek) + "'")
             delete_q("delete from Spektakl where id=" + str(id_spek))
             name_izm.destroy()
             messagebox.showinfo('Удалено',
-                                'Спектакль удалён с сеансами,которые были связаны с ним.')
+                                'Спектакль удалён с сеансами, '
+                                'которые были связаны с ним.')
             combobox_values()
             comboboxselected(event=1)
 
@@ -707,7 +740,8 @@ def chose_name_izm(s=''):
     name_izm.bind('<Button-1>', point)
 
     label_izm_text = Label(name_izm,
-                           text='Выберите нужный спектакль\n для изменения/удаления',
+                           text='Выберите нужный спектакль\n '
+                                'для изменения/удаления',
                            font=("Buxton Sketch", 22))
     label_izm_text.place(x=88, y=25, anchor='nw')
     izm_names = Combobox(name_izm,
@@ -730,14 +764,16 @@ def izm_spek():
     def izmenit_spek():
         try:
             update_q(
-                "update Spektakl set name=" + "'" + name_spek_.get() + "'" + ",opisanie=" + "'" +
+                "update Spektakl set name=" + "'" + name_spek_.get() + "'"
+                + ",opisanie=" + "'" +
                 opisanie_spek_.get("1.0", END).split('\n')[
                     0] + "'" + ",actors=" + "'" +
                 actors_spek_.get("1.0", END).split('\n')[
                     0] + "'" + " where name=" + "'" + label_for_izm[
                     'text'] + "'" + ';')
             messagebox.showinfo("Изменено",
-                                "Данные успешно обновлены и добавлены в базу данных.")
+                                "Данные успешно обновлены "
+                                "и добавлены в базу данных.")
             spek_imz.destroy()
             combobox_values()
             comboboxselected(event=1)
@@ -788,9 +824,11 @@ def add_seans():
         try:
             if proverka_date(data_seans_.get()):
                 insert_q(
-                    "insert into Seans(id_spek,date,time,one,two,three,four) values(" + str(
+                    "insert into Seans(id_spek,date,time,one,two,three,four) "
+                    "values(" + str(
                         select_q(
-                            "select id from Spektakl where name=" + "'" + name_seans_.get() + "'")[
+                            "select id from Spektakl where name=" + "'"
+                            + name_seans_.get() + "'")[
                             0]) + "," \
                     + "'" + str(data_seans_.get()) + "'," + "'" + str(
                         time_seans_.get()) + "'," + \
@@ -800,13 +838,15 @@ def add_seans():
                         four_price_.get()) + ")")
 
                 messagebox.showinfo("Добавлено",
-                                    "Новый сеанс успешно добавлен в базу данных.")
+                                    "Новый сеанс успешно "
+                                    "добавлен в базу данных.")
                 combobox_values()
                 comboboxselected(event=1)
                 seans.destroy()
             else:
                 messagebox.showinfo('Error',
-                                    'Введите корректную дату\nФормат даты : гггг-мм-дд')
+                                    'Введите корректную дату\n'
+                                    'Формат даты : гггг-мм-дд')
                 seans.tkraise()
         except Exception as e:
             print(e)
@@ -843,8 +883,10 @@ def add_seans():
     four_price = Label(seans, text='3 этаж : ')
     four_price.place(x=180, y=242, anchor='w')
 
-    name_seans_ = Combobox(seans, height=1, state='readonly', values=select_q(
-        "Select Spektakl.name from Spektakl"), width=27)
+    name_seans_ = Combobox(seans, height=1, state='readonly',
+                           values=
+                           select_q("Select Spektakl.name from Spektakl"),
+                           width=27)
     name_seans_.place(x=150, y=30, anchor='w')
 
     data_seans_ = Entry(seans, width=30)
@@ -876,24 +918,27 @@ def izm_seans():
         try:
             if proverka_date(data_seans_.get()):
                 update_q("update Seans set id_spek=" + str(select_q(
-                    "select id from Spektakl where name=" + "'" + name_seans_.get() + "'")[
-                                                               0]) + "," \
+                    "select id from Spektakl where name=" + "'"
+                    + name_seans_.get() + "'")[
+                                                               0]) + ","
                          + "date=" + "'" + str(
                     data_seans_.get()) + "', time= " + "'" + str(
                     time_seans_.get()) + "'," \
                          + " one=" + str(one_price_.get()) + ",two=" + str(
                     two_price_.get()) + ",three=" + str(
-                    three_price_.get()) + ",four=" + str(four_price_.get()) + \
+                    three_price_.get()) + ",four=" + str(four_price_.get()) +
                          " where id=" + str(seans_id[0]))
 
                 messagebox.showinfo("Изменено",
-                                    "Данный сеанс успешно изменён в базе данных.")
+                                    "Данный сеанс успешно "
+                                    "изменён в базе данных.")
                 combobox_values()
                 comboboxselected(event=1)
                 seans.destroy()
             else:
                 messagebox.showinfo('Error',
-                                    'Введите корректную дату\nФормат даты : гггг-мм-дд')
+                                    'Введите корректную дату\n'
+                                    'Формат даты : гггг-мм-дд')
                 seans.tkraise()
         except Exception as e:
             print(e)
@@ -961,8 +1006,10 @@ def izm_seans():
     four_price_.place(x=245, y=242, anchor='w')
 
     seans_id = select_q(
-        "select Seans.id from Seans,Spektakl where Seans.id_spek = Spektakl.id and Spektakl.name =" + "'" + name_seans_.get() + "'" + \
-        "and Seans.date =" + "'" + data_seans_.get() + "'" + "and Seans.time=" + "'" + time_seans_.get() + "'")
+        "select Seans.id from Seans,Spektakl where Seans.id_spek = "
+        "Spektakl.id and Spektakl.name =" + "'" + name_seans_.get() + "'" +
+        "and Seans.date =" + "'" + data_seans_.get() + "'"
+        + "and Seans.time=" + "'" + time_seans_.get() + "'")
 
     one_price_.insert(1, select_q(
         "select one from Seans where id=" + str(seans_id[0]))[0])
@@ -1067,7 +1114,7 @@ def design():
             fr_par4['bg'] = color2
             test['bg'] = color2
             test2['bg'] = color2
-            if (str(color3) == 'None'):
+            if not color3:
                 color3 = color('mesto')
             global color_mesto
             color_mesto = color3
@@ -1082,10 +1129,12 @@ def design():
             try:
                 f = open('color.colors', 'w')
                 f.write(color3 + ',' + color1 + ',' + color2)
-            except:
+            except Exception as e:
+                print(e)
                 messagebox.showerror("Error", "Сохранить не удалось.")
                 desing_form.tkraise()
-        except:
+        except Exception as e:
+            print(e)
             messagebox.showerror("Error", "Введите правильно название цвета.")
             desing_form.tkraise()
 
