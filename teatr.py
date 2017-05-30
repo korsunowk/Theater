@@ -1210,24 +1210,26 @@ def report_form():
         else:
             if proverka_date(data1.get()) and proverka_date(data2.get()):
                 ids = select_q(
-                    "select Seans.id from Seans,Sell where Sell.id_seans=Seans.id and Seans.date>='" \
+                    "select Seans.id from Seans,Sell "
+                    "where Sell.id_seans=Seans.id and Seans.date>='"
                     + data1.get() + "' and Seans.date<='" + data2.get() + "'")
                 seanses = []
                 seans = {}
                 for i in ids:
                     seans["name_spek"] = select_q(
-                        "select Spektakl.name from Seans,Spektakl where Seans.id_spek=Spektakl.id and Seans.id=" + str(
-                            i))
+                        "select Spektakl.name from Seans,Spektakl "
+                        "where Seans.id_spek=Spektakl.id and Seans.id="
+                        + str(i))
                     seans["date"] = select_q(
                         "select date from Seans where id=" + str(i))
                     seans["time"] = select_q(
                         "select time from Seans where id=" + str(i))
                     seans["kol"] = select_q(
-                        "select kol_biletov from Sell where id_seans=" + str(
-                            i))
+                        "select kol_biletov from Sell where id_seans="
+                        + str(i))
                     seans["money"] = select_q(
-                        "select total_money from Sell where id_seans=" + str(
-                            i))
+                        "select total_money from Sell where id_seans="
+                        + str(i))
                     seanses.append(seans.copy())
                     seans.clear()
                 try:
@@ -1269,18 +1271,22 @@ def report_form():
                     c.save()
                     c.showPage()
                     messagebox.showinfo('Success',
-                                        'Отчет успешно создан и сохранёй в файл report.pdf')
+                                        'Отчет успешно создан '
+                                        'и сохранёй в файл report.pdf')
                     reportForm.destroy()
                     startfile('report.pdf')
                 except Exception as e:
                     print(e)
                     messagebox.showerror('error',
-                                         'Невозможно создать новый отчет, так как старый всё ещё используется.')
+                                         'Невозможно создать новый отчет, '
+                                         'так как старый всё ещё '
+                                         'используется.')
                     reportForm.tkraise()
 
             else:
                 messagebox.showerror('error',
-                                     'Проверьте правильность введенной даты.\nФормат даты : гггг-мм-дд')
+                                     'Проверьте правильность введенной даты.\n'
+                                     'Формат даты : гггг-мм-дд')
                 reportForm.tkraise()
 
     reportForm = Toplevel()
@@ -1351,19 +1357,23 @@ zakraska_dva_left_frame = Frame(left_frame, width="150", height="30",
                                 bg=color_fon)
 zakraska_dva_left_frame.place(x=0, y=430, anchor="nw")
 
-left_label = Label(left_frame, text="Ряды 1-2 : ", font=("Buxton Sketch", 20),
+left_label = Label(left_frame, text="Ряды 1-2 : ",
+                   font=("Buxton Sketch", 20),
                    bg=color_fon)
 left_label.place(x=142, y=122, anchor="e")
 
-left_label2 = Label(left_frame, text="Ряды 3-4 : ", font=("Buxton Sketch", 20),
+left_label2 = Label(left_frame, text="Ряды 3-4 : ",
+                    font=("Buxton Sketch", 20),
                     bg=color_fon)
 left_label2.place(x=142, y=222, anchor="e")
 
-left_label3 = Label(left_frame, text="2-ой этаж: ", font=("Buxton Sketch", 20),
+left_label3 = Label(left_frame, text="2-ой этаж: ",
+                    font=("Buxton Sketch", 20),
                     bg=color_fon)
 left_label3.place(x=142, y=293, anchor="e")
 
-left_label4 = Label(left_frame, text="3-ий этаж: ", font=("Buxton Sketch", 20),
+left_label4 = Label(left_frame, text="3-ий этаж: ",
+                    font=("Buxton Sketch", 20),
                     bg=color_fon)
 left_label4.place(x=142, y=385, anchor="e")
 
@@ -1377,7 +1387,8 @@ shopping_cart_frame.place(x=95, y=0, anchor="n")
 image = ImageTk.PhotoImage(Image.open("cart2.png"))
 shopping_cart = Label(shopping_cart_frame, image=image, bg=color_fon)
 shopping_cart.place(x=40, y=0, anchor="n")
-shopp = Label(shopping_cart_frame, text="Корзина", font=("Buxton Sketch", 20),
+shopp = Label(shopping_cart_frame, text="Корзина",
+              font=("Buxton Sketch", 20),
               bg=color_fon)
 shopp.place(x=117, y=21, anchor="center")
 
@@ -1391,21 +1402,24 @@ scrollbar.config(command=listshop.yview)
 listshop.pack(side=LEFT, fill=BOTH, expand=1)
 scrollbar.pack(side=RIGHT, fill=Y)
 
-lab_count = Label(shopping_cart_frame, text="Количество : ", bg=color_fon,
+lab_count = Label(shopping_cart_frame, text="Количество : ",
+                  bg=color_fon,
                   font=("Buxton Sketch", 14))
 lab_count.place(x=60, y=150, anchor="center")
 lab_co = Label(shopping_cart_frame, text='', bg=color_fon,
                font=("Buxton Sketch", 16))
 lab_co.place(x=135, y=150, anchor="center")
 
-lab_sum = Label(shopping_cart_frame, text='Общая сумма : ', bg=color_fon,
+lab_sum = Label(shopping_cart_frame, text='Общая сумма : ',
+                bg=color_fon,
                 font=("Buxton Sketch", 14))
 lab_sum.place(x=60, y=175, anchor='center')
 lab_s = Label(shopping_cart_frame, text='0', bg=color_fon,
               font=("Buxton Sketch", 16))
 lab_s.place(x=135, y=175, anchor="center")
 
-clear_but = Button(shopping_cart_frame, text="Очистить корзину", width=25)
+clear_but = Button(shopping_cart_frame, text="Очистить корзину",
+                   width=25)
 clear_but.place(x=97, y=210, anchor="center")
 clear_but.bind('<Button-1>', clear)
 
@@ -1471,10 +1485,10 @@ opisanie.place(x=1, y=27, anchor="nw")
 combobox = Combobox(bottom_frame, height=5, state='readonly',
                     font=("Arial", 15, "bold"), width=35,
                     values=combobox_seans(
-                        select_q("Select Spektakl.name from Spektakl,Seans " \
-                                 " where Seans.id_spek = Spektakl.id and Seans.date >= +" \
-                                 + "'" + str(datetime.today().date()) \
-                                 + "'")))
+                        select_q("Select Spektakl.name from Spektakl,Seans "
+                                 " where Seans.id_spek = Spektakl.id "
+                                 "and Seans.date >= +"
+                                 + "'" + str(datetime.today().date()) + "'")))
 
 combobox.place(x=750, y=15, anchor="w")
 combobox.bind('<<ComboboxSelected>>', comboboxselected)
