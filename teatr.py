@@ -1439,18 +1439,18 @@ bron_but.place(x=142, y=245, anchor="center")
 price_frame = Frame(right_frame, width="190", height="197", bg=color_fon)
 price_frame.place(x=95, y=262, anchor="n")
 
-parter_label = Label(price_frame, text='Партер :', bg=color_fon,
+parter_label = Label(price_frame, text='Партер:', bg=color_fon,
                      font=("Buxton Sketch", 16))
 parter_label.place(x=10, y=15, anchor="w")
 
-ryad_label = Label(price_frame, text='Ряд 1-2 :', bg=color_fon,
+ryad_label = Label(price_frame, text='Ряд 1-2:', bg=color_fon,
                    font=("Buxton Sketch", 16))
 ryad_label.place(x=36, y=40, anchor="w")
 
 price1 = Label(price_frame, bg=color_fon, font=("Buxton Sketch", 20))
 price1.place(x=111, y=40, anchor='w')
 
-ryad2_label = Label(price_frame, text='Ряд 3-4 :', bg=color_fon,
+ryad2_label = Label(price_frame, text='Ряд 3-4:', bg=color_fon,
                     font=("Buxton Sketch", 16))
 ryad2_label.place(x=36, y=68, anchor="w")
 
@@ -1464,7 +1464,7 @@ etazh_label.place(x=10, y=104, anchor='w')
 price3 = Label(price_frame, bg=color_fon, font=("Buxton Sketch", 20))
 price3.place(x=115, y=104, anchor='w')
 
-etazh2_label = Label(price_frame, text='3-ий этаж : ', bg=color_fon,
+etazh2_label = Label(price_frame, text='3-ий этаж: ', bg=color_fon,
                      font=("Buxton Sketch", 16))
 etazh2_label.place(x=10, y=144, anchor='w')
 
