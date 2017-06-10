@@ -45,8 +45,8 @@ class Mesto:
         if self.but['bg'] != "gray" and self.but['bg'] != "darkblue":
             self.but['bg'] = "red"
             self.but['fg'] = "black"
-            name = 'Ряд : ' + self.but.a + ' , Место : ' + str(
-                self.but['text']) + ', Цена : ' + str(self.but.price)
+            name = 'Ряд: ' + self.but.a + ' , Место: ' + str(
+                self.but['text']) + ', Цена: ' + str(self.but.price)
 
             if name not in listshop.get(0, END):
                 listshop.insert(END, name)
@@ -58,8 +58,8 @@ class Mesto:
         if self.but['bg'] != "gray" and self.but['bg'] != "darkblue":
             self.but['bg'] = "black"
             self.but['fg'] = "white"
-            name = 'Ряд : ' + self.but.a + ' , Место : ' + str(
-                self.but['text']) + ', Цена : ' + str(self.but.price)
+            name = 'Ряд: ' + self.but.a + ' , Место: ' + str(
+                self.but['text']) + ', Цена: ' + str(self.but.price)
 
             if name not in listshop.get(0, END):
                 listshop.insert(END, name)
@@ -161,8 +161,8 @@ class CreateHall():
         for i in range(4):
             for each in self.all[i]:
                 if each.but['text'] in numbers:
-                    name = 'Ряд : ' + each.but.a + ' , Место : ' + str(
-                        each.but['text']) + ', Цена : ' + str(each.but.price)
+                    name = 'Ряд: ' + each.but.a + ' , Место: ' + str(
+                        each.but['text']) + ', Цена: ' + str(each.but.price)
                     if name not in listshop.get(0, END):
                         listshop.insert(END, name)
                         lol = list(listshop.get(0, END))
@@ -444,8 +444,8 @@ def update_zal(event):
         "select nomer from Bilet where id_seans = " + "'" + seans_id + "'")
 
     date_now = str(datetime.today().date())
-    time_now = str(datetime.today().time())[
-               :5]  # TIME FOR BRON !!!!!!!!! 30 MINUT
+    time_now = str(datetime.today().time())[:5]  # TIME FOR BRON !!!!!!!!! 30 MINUT
+    
     if int(time_now[3:]) + 31 < 60:
         minute = int(time_now[3:]) + 31
         time_for_bron = time_now[:3] + str(minute)
