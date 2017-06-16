@@ -1215,6 +1215,7 @@ def report_form():
                     + data1.get() + "' and Seans.date<='" + data2.get() + "'")
                 seanses = []
                 seans = {}
+ 
                 for i in ids:
                     seans["name_spek"] = select_q(
                         "select Spektakl.name from Seans,Spektakl "
