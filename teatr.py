@@ -262,8 +262,7 @@ def proverka(event, color):
             if each.but['bg'] == color:
                 clear(event)
                 return 0
-    else:
-        return 1
+    return 1
 
 
 def total(price):
@@ -754,6 +753,7 @@ def chose_name_izm(s=''):
         spek_ok = Button(name_izm, text='Выбрать', command=deleting, font=15)
     else:
         spek_ok = Button(name_izm, text='Выбрать', command=izmenenie, font=15)
+
     spek_ok.place(x=85, y=251)
     spek_cancel = Button(name_izm, text='Отменить', command=name_izm.destroy,
                          font=15)
