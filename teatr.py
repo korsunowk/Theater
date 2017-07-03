@@ -35,8 +35,7 @@ class Mesto:
         self.but.bind("<Button-3>", self.bron)
         self.but['bg'] = color_mesto
         self.but['width'] = width
-        self.but.a = str(a)
-        self.but.b = str(b)
+        self.but.a, self.but.b = str(a), str(b)
         self.but.price = price
         self.but['height'] = height
         self.but.grid(row=a, column=b, padx=5, pady=5)
